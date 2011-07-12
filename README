@@ -1,4 +1,4 @@
-A homebrew Google Plus API. Right now this consists of the following:
+An unofficial Google Plus API. Right now this consists of the following:
 
 PHP Classes
 -----------
@@ -21,3 +21,12 @@ Installation
 1. Copy includes/config.inc.editme to /includes/config.inc
 2. Edit config.inc with your path, url and mysql information
 3. Import the sql tables in the sql/ subdirectory
+
+
+TODO
+-----------
+
+- pull the rest of the data fields into the PlusPerson object
+- create a PlusPost object to pull and cache post data
+- do something interesting with all of this
+
