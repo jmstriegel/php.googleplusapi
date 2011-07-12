@@ -1,0 +1,2 @@
+If many templates uses pieces of similar code, put those snippets here. Most
+commonly, this is convenient for header and footer files.

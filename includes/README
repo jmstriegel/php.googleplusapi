@@ -1,0 +1,3 @@
+Any config information, common page logic procedures, and utility functions
+should go here. Keep things reasonable here and use /lib for your more 
+structured object oriented classes.

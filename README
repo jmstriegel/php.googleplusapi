@@ -1,0 +1,23 @@
+A homebrew Google Plus API. Right now this consists of the following:
+
+PHP Classes
+-----------
+GoogleUtil - functions for parsing the almost-JSON that Google Plus produces
+PlusPerson - a person entity in Gooogle plus that can be stored to a local mysql DB
+PlusRelationship - a relationship between people in Google plus. This does not contain any circle context
+
+Tests
+-----------
+plususer.php - demonstrates loading and caching users, as well as traversing the social graph
+
+
+API
+-----------
+getplusperson.php?plusid=xxx - JSON(P) API for retrieving profile data for a person.
+
+
+Installation
+------------
+1. Copy includes/config.inc.editme to /includes/config.inc
+2. Edit config.inc with your path, url and mysql information
+3. Import the sql tables in the sql/ subdirectory

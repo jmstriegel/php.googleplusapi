@@ -1,0 +1,4 @@
+If your site receives user uploaded files that are available for http access,
+place them here. Use .htaccess to ensure proper directory and security
+permissions. Make sure users cannot upload files with an executable (.php)
+extension or they'll be able to run arbitrary code on your server.

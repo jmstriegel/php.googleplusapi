@@ -1,0 +1,2 @@
+Any class libraries and external libs (facebook, twitter oauth, etc.) should
+go in here. Use a subdirectory for each libray to keep things organized.

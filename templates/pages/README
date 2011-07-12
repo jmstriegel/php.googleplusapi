@@ -1,0 +1,5 @@
+These files will contain predominatelyi body HTML. This is used by main page
+logic to render output. Template variables will be in the global $template
+array. Try to keep from using any php code in here, aside from simple 
+conditions for displaying alternate html, or loop control to iterate over
+results.

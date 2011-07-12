@@ -1,0 +1,3 @@
+Place any json/xml services here. Having these in a subdirectory helps keep
+things organized, and makes it easy to handle url mapping and permissions
+if you need to handle api calls differently than main pages.
