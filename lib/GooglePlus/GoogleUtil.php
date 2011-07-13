@@ -6,7 +6,7 @@ class GoogleUtil {
     public static function FetchGoogleJSON( $url ) {
         $response = file_get_contents( $url );
         $response = GoogleUtil::CleanGoogleJSON( $response );
-        usleep( 200000 ); //be nice. let's sleep for 200ms
+        usleep( 20000 ); //be nice. let's sleep for 20ms
         return json_decode( $response, true );
     }
     

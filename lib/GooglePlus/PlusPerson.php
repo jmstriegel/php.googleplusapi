@@ -89,7 +89,7 @@ class PlusPerson {
     public function insertIntoDB() {
         global $db;
         
-        if ( $this->project_id <= 0 ) {
+        if ( $this->plusperson_id <= 0 ) {
             $query = sprintf("INSERT INTO plusperson ( googleplus_id, profile_photo, first_name, last_name, subhead, introduction, raw_data, fetched_relationships, created_dt, modified_dt ) " .
                             " VALUES ( '%s', '', '', '', '', '', '', 0, NOW(), NOW() ) ", 
                             clean_string( $this->googleplus_id ));
@@ -138,12 +138,12 @@ class PlusPerson {
         if ( $this->plusperson_id > 0 ) {
 
             //DELETE ALL SUB-CONTENT
-            $rs =  PlusRelationship::FetchRelationshipsByOwner( $this->plusperson_id );
+            $rs =  PlusRelationship::FetchRelationshipsByOwner( $this->googleplus_id );
             foreach ( $rs as $r ) {
                 $r->deleteFromDB();
             }
                 
-            $rs =  PlusRelationship::FetchRelationshipsByCircled( $this->plusperson_id );
+            $rs =  PlusRelationship::FetchRelationshipsByCircled( $this->googleplus_id );
             foreach ( $rs as $r ) {
                 $r->deleteFromDB();
             }
@@ -164,6 +164,7 @@ class PlusPerson {
         $this->last_name = $data[1][2][4][2];
         $this->introduction = $data[1][2][14][1];
         $this->subhead = $data[1][2][33][1];
+        $this->raw_data = json_encode( $data );
     }
 
 
@@ -175,7 +176,6 @@ class PlusPerson {
            
             $jsondata = GoogleUtil::FetchGoogleJSON( $profile_url );
 
-            $this->raw_data = json_encode($jsondata);
             $this->loadFromGooglePlusJSON( $jsondata );
         
         }

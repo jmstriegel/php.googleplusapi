@@ -53,9 +53,9 @@ class PlusRelationship {
     public function insertIntoDB() {
         global $db;
         
-        if ( $this->project_id <= 0 ) {
+        if ( $this->plusrelationship_id <= 0 ) {
             $query = sprintf("INSERT INTO plusrelationship ( owner_id, hasincircle_id, created_dt, modified_dt ) " .
-                            " VALUES ( 0, 0, NOW(), NOW() ) ");
+                            " VALUES ( '','', NOW(), NOW() ) ");
             $result = mysql_query( $query, $db );
             if ( $result ) {
                 $this->plusrelationship_id = mysql_insert_id( $db );
@@ -71,12 +71,12 @@ class PlusRelationship {
         if ( $this->plusrelationship_id > 0 ) {
         
             $query = sprintf("UPDATE plusrelationship SET " .
-                            " owner_id=%d, " .
-                            " hasincircle_id=%d, " .
+                            " owner_id='%s', " .
+                            " hasincircle_id='%s', " .
                             " modified_dt = NOW() " .
                             " WHERE plusrelationship_id=%d ",
-                            clean_int( $this->owner_id ),
-                            clean_int( $this->hasincircle_id ),
+                            clean_string( $this->owner_id ),
+                            clean_string( $this->hasincircle_id ),
                             clean_int( $this->plusrelationship_id ) );
             $result = mysql_query( $query, $db );
         
@@ -103,10 +103,10 @@ class PlusRelationship {
     }
 
 
-    public static function FetchRelationshipsByOwner( $plusid ) {
+    public static function FetchRelationshipsByOwner( $googleplus_id ) {
         global $db;
         
-        $query = sprintf( "SELECT * FROM plusrelationship WHERE owner_id = %d ORDER BY modified_dt ASC" , clean_int($plusid) );
+        $query = sprintf( "SELECT * FROM plusrelationship WHERE owner_id = '%s' ORDER BY modified_dt ASC" , clean_string($googleplus_id) );
         $result = mysql_query( $query, $db );
         $rs = array();
         while ( $row = mysql_fetch_assoc( $result ) ) {
@@ -120,10 +120,10 @@ class PlusRelationship {
     }
 
 
-    public static function FetchRelationshipsByCircled( $plusid ) {
+    public static function FetchRelationshipsByCircled( $googleplus_id ) {
         global $db;
         
-        $query = sprintf( "SELECT * FROM plusrelationship WHERE hasincircle_id = %d ORDER BY modified_dt ASC" , clean_int($plusid) );
+        $query = sprintf( "SELECT * FROM plusrelationship WHERE hasincircle_id = '%s' ORDER BY modified_dt ASC" , clean_string($googleplus_id) );
         $result = mysql_query( $query, $db );
         $rs = array();
         while ( $row = mysql_fetch_assoc( $result ) ) {

@@ -52,11 +52,11 @@ function PageMain() {
         $followers = PlusPerson::FetchIncomingPlusPeople( $person->googleplus_id );
 
 
-        $or = PlusRelationship::FetchRelationshipsByOwner( $person->plusperson_id );
+        $or = PlusRelationship::FetchRelationshipsByOwner( $person->googleplus_id );
         foreach ( $or as $r ) {
             $r->deleteFromDB();
         }
-        $cr = PlusRelationship::FetchRelationshipsByCircled( $person->plusperson_id );
+        $cr = PlusRelationship::FetchRelationshipsByCircled( $person->googleplus_id );
         foreach ( $cr as $r ) {
             $r->deleteFromDB();
         }
@@ -74,8 +74,8 @@ function PageMain() {
             $hascircled[] = $fp;
 
             $rel = new PlusRelationship();
-            $rel->owner_id = $person->plusperson_id;
-            $rel->hasincircle_id = $fp->plusperson_id;
+            $rel->owner_id = $person->googleplus_id;
+            $rel->hasincircle_id = $fp->googleplus_id;
             $rel->insertIntoDB();
 
         }
@@ -88,13 +88,13 @@ function PageMain() {
             $fp->loadByGooglePlusID( $pid );
             if ( $fp->plusperson_id <= 0 ) {
                 $fp->googleplus_id = $pid;
-            } else {
-                $rel = new PlusRelationship();
-                $rel->owner_id = $fp->plusperson_id;
-                $rel->hasincircle_id = $person->plusperson_id;
-                $rel->insertIntoDB();
             }
             $circledby[] = $fp;
+            
+            $rel = new PlusRelationship();
+            $rel->owner_id = $fp->googleplus_id;
+            $rel->hasincircle_id = $person->googleplus_id;
+            $rel->insertIntoDB();
             
         }
 
@@ -103,17 +103,23 @@ function PageMain() {
 
     } else {
     
-        $or = PlusRelationship::FetchRelationshipsByOwner( $person->plusperson_id );
+        $or = PlusRelationship::FetchRelationshipsByOwner( $person->googleplus_id );
         foreach ( $or as $r ) {
             $p = new PlusPerson();
-            $p->loadByID( $r->hasincircle_id );
+            $p->loadByGooglePlusID( $r->hasincircle_id );
+            if ( $p->plusperson_id <= 0 ) {
+                $p->googleplus_id = $r->hasincircle_id;
+            }
             $hascircled[] = $p;
         }
 
-        $cr = PlusRelationship::FetchRelationshipsByCircled( $person->plusperson_id );
+        $cr = PlusRelationship::FetchRelationshipsByCircled( $person->googleplus_id );
         foreach ( $cr as $r ) {
             $p = new PlusPerson();
-            $p->loadByID( $r->owner_id );
+            $p->loadByGooglePlusID( $r->owner_id );
+            if ( $p->plusperson_id <= 0 ) {
+                $p->googleplus_id = $r->owner_id;
+            }
             $circledby[] = $p;
         }
 
