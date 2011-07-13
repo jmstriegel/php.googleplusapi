@@ -5,15 +5,20 @@ PHP Classes
 GoogleUtil - functions for parsing the almost-JSON that Google Plus produces
 PlusPerson - a person entity in Gooogle plus that can be stored to a local mysql DB
 PlusRelationship - a relationship between people in Google plus. This does not contain any circle context
+PlusPost - a post to a user's activty stream
+PostAttachment - encapsulates a media attachment to a post
+
 
 Tests
 -----------
-plususer.php - demonstrates loading and caching users, as well as traversing the social graph
+tests/plususer.php?plusid=xxxxxxxx - demonstrates loading and caching users, as well as traversing the social graph
+tests/plusactivity.php?plusid=xxxxxxx - demonstrates loading and caching public posts from a user's activity stream
 
 
 API
 -----------
-getplusperson.php?plusid=xxx - JSON(P) API for retrieving profile data for a person.
+api/getplusperson.php?plusid=xxx - JSON(P) API for retrieving profile data for a person.
+api/getplusposts.php?plusid=xxx - JSON(P) API for retrieving post activty for a person.
 
 
 Installation
@@ -26,7 +31,6 @@ Installation
 TODO
 -----------
 
-- pull the rest of the data fields into the PlusPerson object
-- create a PlusPost object to pull and cache post data
+- create getters for the rest of the data fields into the PlusPerson and PlusPosts objects
 - do something interesting with all of this
 

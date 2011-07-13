@@ -8,7 +8,7 @@ require_once $includesdir . 'database.inc';
 
 //libraries we're using (these are in /lib/)
 require_once 'GooglePlus/PlusPerson.php';
-require_once 'GooglePlus/PlusRelationship.php';
+require_once 'GooglePlus/PlusPost.php';
 
 //Sets up normal page variables, performs auth, runs PageMain()
 require_once $includesdir . 'standard_page_logic.inc';
@@ -55,14 +55,39 @@ function PageMain() {
         $person->updateDB();
     }
 
+    //Get the posts from G+
+    $posts = PlusPost::FetchActivityStream( $person->googleplus_id );
 
-    $data = array( 
+    //Save them all into the DB (merge will try to update them if they exist already)
+    foreach ( $posts as $post ) {
+        $post->mergeStreamPostIntoDB();
+    }
+
+
+    $postsdata = array();
+    foreach ( $posts as $post ) {
+        $data = array( 
+            'googleplus_postid' => $post->googleplus_postid,
+            'author_id' => $post->author_id,
+            'post_data' => $post->post_data,
+            'share_content' => $post->share_content,
+            'shared_postid' => $post->shared_postid
+        );
+        $postsdata[] = $data;
+    }
+
+    $persondata = array( 
         'googleplus_id' => $person->googleplus_id,
         'first_name' => $person->first_name,
         'last_name' => $person->last_name,
         'profile_photo' => $person->profile_photo,
         'introduction' => $person->introduction,
         'subhead' => $person->subhead
+    );
+
+    $data = array( 
+        'plusperson' => $persondata,
+        'posts' => $postsdata
     );
 
     $responsedata = json_encode( $data );
