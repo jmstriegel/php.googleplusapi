@@ -222,7 +222,7 @@ class PlusPost {
     public static function FetchPostsByGooglePlusID( $googleplus_id ) {
         global $db;
 
-        $query = sprintf( "SELECT * FROM pluspost WHERE author_id = '%s' ORDER BY modified_dt DESC" , clean_string($googleplus_id) );
+        $query = sprintf( "SELECT * FROM pluspost WHERE author_id = '%s' ORDER BY created_dt DESC" , clean_string($googleplus_id) );
         $result = mysql_query( $query, $db );
         $ps = array();
         while ( $row = mysql_fetch_assoc( $result ) ) {

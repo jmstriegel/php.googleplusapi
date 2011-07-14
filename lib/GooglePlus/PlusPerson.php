@@ -188,10 +188,9 @@ class PlusPerson {
         if ( $plusid != "" ) {
        //echo "fetch followees<br/>"; 
             $visible_url = 'https://plus.google.com/_/socialgraph/lookup/visible/?o=%5Bnull%2Cnull%2C%22' . $plusid . '%22%5D';
-
             $jsondata = GoogleUtil::FetchGoogleJSON( $visible_url );
-            $visiblepeople = $jsondata[0][2];
-
+            $visiblepeople = $jsondata[2];
+//var_dump($jsondata);
             foreach( $visiblepeople as $pdata ) {
             
                 $person = new PlusPerson();
@@ -213,7 +212,7 @@ class PlusPerson {
        //echo "fetch followers<br/>"; 
             $visible_url = 'https://plus.google.com/_/socialgraph/lookup/incoming/?o=%5Bnull%2Cnull%2C%22' . $plusid .'%22%5D&n=1000';
             $jsondata = GoogleUtil::FetchGoogleJSON( $visible_url );
-            $inpeople = $jsondata[0][2];
+            $inpeople = $jsondata[2];
 
             foreach( $inpeople as $pdata ) {
             
