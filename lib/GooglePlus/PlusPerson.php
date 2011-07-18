@@ -195,6 +195,15 @@ class PlusPerson {
             
                 $person = new PlusPerson();
                 $person->googleplus_id = $pdata[0][2];
+                
+                $name = $pdata[2][0];
+                if ( preg_match( '/^([\w\.\s]+) (\w+)$/', $name, $matches ) ) {
+                    $person->first_name = $matches[1];
+                    $person->last_name = $matches[2];
+                } else {
+                    $person->first_name = $name;
+                }
+
                 $people[] = $person;
             }
 
@@ -218,6 +227,14 @@ class PlusPerson {
             
                 $person = new PlusPerson();
                 $person->googleplus_id = $pdata[0][2];
+                
+                $name = $pdata[2][0];
+                if ( preg_match( '/^([\w\.\s]+) (\w+)$/', $name, $matches ) ) {
+                    $person->first_name = $matches[1];
+                    $person->last_name = $matches[2];
+                } else {
+                    $person->first_name = $name;
+                }
                 $people[] = $person;
             }
 
